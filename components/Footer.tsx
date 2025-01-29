@@ -6,7 +6,7 @@ import { Instagram, Linkedin } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-[#F5F3F0] px-[24px]">
+    <footer className="bg-[#ECEAE6] px-[24px]">
       <div className="pt-[80px] pb-[40px] max-w-[1400px] w-full my-0 mx-auto">
         <div className="flex gap-6 justify-between flex-wrap items-start">
           <Link href="/">
@@ -20,7 +20,7 @@ export function Footer() {
           </Link>
           <div className="flex items-start content-start gap-6 flex-wrap">
             <div className="flex flex-col gap-4 w-[200px]">
-              <h3 className="font-inter text-sm font-bold text-[#9a9081]">CONTATO</h3>
+              <h3 className="font-inter text-sm font-bold text-[#665E54]">CONTATO</h3>
               <ul className="flex list-none flex-col items-start gap-3 self-stretch">
                 <li className="font-inter text-sm text-[#1D1D1D] font-medium hover:text-primary">
                   <Link href="/atendimento">Atendimento</Link>
@@ -45,7 +45,7 @@ export function Footer() {
               </ul>
             </div>
             <div className="flex flex-col gap-4 w-[200px]">
-              <h3 className="font-inter text-sm font-bold text-[#9a9081]">AGEX</h3>
+              <h3 className="font-inter text-sm font-bold text-[#665E54]">AGEX</h3>
               <ul className="flex flex-col list-none items-start gap-3 self-stretch">
                 <li className="font-inter text-sm text-[#1D1D1D] font-medium hover:text-primary">
                   <Link href="/quem-somos">Quem somos</Link>
@@ -65,7 +65,7 @@ export function Footer() {
               </ul>
             </div>
             <div className="flex flex-col gap-4 w-[200px]">
-              <h3 className="font-inter text-sm font-bold text-[#9a9081]">CONTA</h3>
+              <h3 className="font-inter text-sm font-bold text-[#665E54]">CONTA</h3>
               <ul className="flex list-none flex-col items-start gap-3 self-stretch">
                 <li className="font-inter text-sm text-[#1D1D1D] font-medium hover:text-primary">
                   <a target="_blank" rel="noopener noreferrer" href="https://cliente.agex.com.br/login">Criar conta / Login</a>
@@ -88,7 +88,7 @@ export function Footer() {
               </ul>
             </div>
             <div className="flex flex-col gap-4 w-[200px]">
-              <h3 className="font-inter text-sm font-bold text-[#9a9081]">BLOG</h3>
+              <h3 className="font-inter text-sm font-bold text-[#665E54]">BLOG</h3>
               <ul className="flex list-none flex-col items-start gap-3 self-stretch">
                 <li className="font-inter text-sm text-[#1D1D1D] font-medium hover:text-primary">
                   <Link href="/blog">Notícias</Link>
@@ -123,13 +123,16 @@ export function Footer() {
                 </div>
               </a>
             </div>
-            <a target="_blank" rel="noopener noreferrer" className="w-[220px] h-[20px]" href="https://www.reclameaqui.com.br/empresa/agex-transportes-urgentes/">
+            <a target="_blank" rel="noopener noreferrer" className="w-[220px] h-[20px] relative" href="https://www.reclameaqui.com.br/empresa/agex-transportes-urgentes/">
               <Image
                 src="/reclameaqui (1).webp"
                 alt="Reclame Aqui"
-                width={684}
-                height={193}
+                width={220}
+                height={20}
+                quality={75}
                 loading="lazy"
+                className="object-contain"
+                sizes="220px"
               />
             </a>
           </div>
@@ -139,7 +142,7 @@ export function Footer() {
         <div className="flex justify-between flex-wrap py-[40px] items-start gap-8 self-stretch">
           <div className="flex flex-wrap flex-col md:flex-row items-start gap-8 md:gap-14">
             <div>
-              <p className="font-inter text-sm font-medium text-[#807566]"> 2024 Agex Transportes LTDA</p>
+              <p className="font-inter text-sm font-medium text-[#665E54]"> 2024 Agex Transportes LTDA</p>
             </div>
             <div className="flex justify-center md:flex-row flex-col flex-wrap items-start md:gap-8 gap-4">
               <Link href="/seja-cliente">

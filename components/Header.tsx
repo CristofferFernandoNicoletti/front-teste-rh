@@ -87,7 +87,7 @@ export function Header() {
                             Soluções
                           </div>
                         </Link>
-                        <Link href="https://site-agex.vercel.app/atendimento">
+                        <Link href="/atendimento">
                           <div className="py-1.5 hover:bg-black/10 h-10 items-center rounded-[8px] px-4 text-blue-350 text-base leading-6 font-medium transition-colors duration-150 flex gap-1">
                             Ouvidoria
                           </div>
@@ -114,7 +114,7 @@ export function Header() {
                 <button
                   type="button"
                   aria-label="Botão"
-                  className="bg-[#FF4B12] hover:bg-[#ff6e31] py-[15px] px-[16px] gap-2 py-4 px-[20px] w-full h-10 rounded-[14px] gap-2 font-semibold text-base flex font-inter justify-center items-center cursor-pointer"
+                  className="bg-[#E64100] hover:bg-[#CC3A00] py-[15px] px-[16px] gap-2 py-4 px-[20px] w-full h-10 rounded-[14px] gap-2 font-semibold text-base flex font-inter justify-center items-center cursor-pointer"
                 >
                   <span className="text-white font-inter">Criar conta / Login</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 25" fill="none">
@@ -158,7 +158,7 @@ export function Header() {
                 <Link href="https://site-agex.vercel.app/solucoes" className="text-gray-800">
                   Soluções
                 </Link>
-                <Link href="https://site-agex.vercel.app/atendimento" className="text-gray-800">
+                <Link href="/atendimento" className="text-gray-800">
                   Ouvidoria
                 </Link>
               </div>
@@ -183,7 +183,7 @@ export function Header() {
               <a href="https://cliente.agex.com.br/login" target="_blank" rel="noopener noreferrer">
                 <button
                   type="button"
-                  className="bg-[#FF4B12] hover:bg-[#ff6e31] w-full py-3 px-4 rounded-[14px] text-white font-semibold text-base flex justify-center items-center gap-2"
+                  className="bg-[#E64100] hover:bg-[#CC3A00] w-full py-3 px-4 rounded-[14px] text-white font-semibold text-base flex justify-center items-center gap-2"
                 >
                   <span>Criar conta / Login</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 25" fill="none">

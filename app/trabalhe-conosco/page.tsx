@@ -163,6 +163,7 @@ export default function TrabalhePage() {
                     checked={isPrivacyAccepted}
                     onChange={(e) => setIsPrivacyAccepted(e.target.checked)}
                     className="w-4 h-4 rounded bg-white border border-gray-300 accent-[#FF4B12] cursor-pointer flex-shrink-0"
+                    aria-label="Aceitar política de privacidade"
                   />
                   <label htmlFor="checkbox-privacy-policy" className="text-sm text-gray-700 cursor-pointer">
                     Eu aceito a <a href="/politica-de-privacidade" className="text-blue-600 hover:underline">política de privacidade</a>

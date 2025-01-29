@@ -174,10 +174,9 @@ export function PreCadastroForm() {
             type="button"
             role="checkbox"
             aria-checked={aceitaPolitica}
-            data-state={aceitaPolitica ? 'checked' : 'unchecked'}
-            value="on"
+            aria-label="Aceitar política de privacidade"
             onClick={() => setAceitaPolitica(!aceitaPolitica)}
-            className="peer relative h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-white data-[state=checked]:bg-[#FF4B12] data-[state=checked]:border-[#FF4B12] flex items-center justify-center"
+            className="peer relative h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-white data-[state=checked]:bg-[#E64100] data-[state=checked]:border-[#E64100] flex items-center justify-center"
             id="checkbox-privacy-policy"
           >
             {aceitaPolitica && (
@@ -211,7 +210,7 @@ export function PreCadastroForm() {
         <button
           type="submit"
           disabled={!aceitaPolitica}
-          className="w-full bg-[#FF4B12] text-white py-3 px-4 rounded-md hover:bg-[#ff6e31] transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#FF4B12]"
+          className="bg-[#E64100] text-white hover:bg-[#CC3A00] w-full py-3 px-4 rounded-[14px] font-semibold text-base flex justify-center items-center gap-2 transition-colors duration-200"
         >
           Enviar o currículo
         </button>
