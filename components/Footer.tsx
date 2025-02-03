@@ -130,7 +130,7 @@ export function Footer() {
         <div className="flex justify-between flex-wrap py-[40px] items-start gap-8 self-stretch">
           <div className="flex flex-wrap flex-col md:flex-row items-start gap-8 md:gap-14">
             <div>
-              <p className="font-inter text-sm font-medium text-[#665E54]"> 2024 Agex Transportes LTDA</p>
+              <p className="font-inter text-sm font-medium text-[#665E54]"> 2025 Agex Transportes LTDA</p>
             </div>
             <div className="flex justify-center md:flex-row flex-col flex-wrap items-start md:gap-8 gap-4">
               <Link href="/seja-cliente">
