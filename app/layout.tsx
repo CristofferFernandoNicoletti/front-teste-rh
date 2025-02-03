@@ -13,6 +13,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'AGEX Transporte - Trabalhe Conosco',
   description: 'Faça parte da equipe que move o futuro do transporte!',
+  robots: {
+    index: true,
+    follow: true,
+  }
 };
 
 export default function RootLayout({
