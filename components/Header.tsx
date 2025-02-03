@@ -18,7 +18,7 @@ export function Header() {
 
   // Otimizar o listener de scroll com throttle
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
     
     const handleScroll = () => {
       if (timeoutId) return;
@@ -26,7 +26,7 @@ export function Header() {
       timeoutId = setTimeout(() => {
         const scrollPosition = window.scrollY;
         setIsScrolled(scrollPosition > 0);
-        timeoutId = null;
+        timeoutId = undefined;
       }, 100);
     };
 
