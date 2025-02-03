@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { FileText } from 'lucide-react';
 import { Banner } from '@/components/Banner';
-import Image from 'next/image';
 
 const cities = ['CURITIBA', 'SÃO PAULO', 'RIO DE JANEIRO', 'BELO HORIZONTE'] as const;
 
