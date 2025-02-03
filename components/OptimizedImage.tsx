@@ -1,6 +1,6 @@
 'use client';
 
-import Image, { ImageProps } from 'next/image';
+import { ImageProps } from 'next/image';
 import { useState, useEffect } from 'react';
 
 interface OptimizedImageProps extends Omit<ImageProps, 'quality' | 'loading' | 'sizes'> {
@@ -50,21 +50,24 @@ export function OptimizedImage({
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
-      <Image
+      <img
         src={src}
         alt={alt}
         className={`
           duration-700 ease-in-out
           ${isLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'}
         `}
-        quality={quality}
         loading={priority ? 'eager' : 'lazy'}
-        sizes={sizes}
-        placeholder="blur"
-        blurDataURL={generateBlurHash()}
-        onLoadingComplete={() => setIsLoading(false)}
+        decoding="async"
+        style={{
+          ...props.style,
+          backgroundImage: `url(${generateBlurHash()})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
         {...dimensions}
         {...props}
+        onLoadingComplete={() => setIsLoading(false)}
       />
     </div>
   );
