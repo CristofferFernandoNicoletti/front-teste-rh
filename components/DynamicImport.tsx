@@ -1,11 +1,11 @@
 import dynamic from 'next/dynamic';
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { DynamicOptionsLoadingProps } from 'next/dynamic';
 
 interface DynamicImportProps {
-  import: () => Promise<any>;
+  import: () => Promise<React.ComponentType>;
   loading?: ((props: DynamicOptionsLoadingProps) => JSX.Element | null);
-  children: (Component: any) => React.ReactNode;
+  children: (Component: React.ComponentType) => React.ReactNode;
 }
 
 export function DynamicImport({ import: importFn, loading, children }: DynamicImportProps) {
@@ -19,8 +19,7 @@ export function DynamicImport({ import: importFn, loading, children }: DynamicIm
       error: null,
       isLoading: true,
       pastDelay: false,
-      timedOut: false,
-      retry: () => {}
+      timeout: false,
     }) : null}>
       {children(DynamicComponent)}
     </Suspense>

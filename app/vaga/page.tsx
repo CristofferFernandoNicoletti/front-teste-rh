@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import { VagaCard } from '@/components/vaga-card';
 
 export default function VagasPage() {
@@ -23,31 +21,24 @@ export default function VagasPage() {
     },
     {
       id: "3",
-      title: "CONFERENTE DE CARGA",
+      title: "ASSISTENTE ADMINISTRATIVO",
       company: "AGEX",
-      location: "Londrina",
+      location: "São Paulo",
       type: "CLT",
       salary: "A combinar"
-    },
-    // Adicione mais vagas conforme necessário
+    }
   ];
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Vagas Disponíveis</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {vagas.map((vaga) => (
-          <VagaCard
-            key={vaga.id}
-            id={vaga.id}
-            title={vaga.title}
-            company={vaga.company}
-            location={vaga.location}
-            type={vaga.type}
-            salary={vaga.salary}
-          />
-        ))}
+    <main className="pt-32 pb-16 px-4">
+      <div className="max-w-[1400px] mx-auto">
+        <h1 className="text-3xl font-bold mb-8">Vagas Disponíveis</h1>
+        
+        <div className="grid gap-6">
+          {vagas.map((vaga) => (
+            <VagaCard key={vaga.id} {...vaga} />
+          ))}
+        </div>
       </div>
     </main>
   );
