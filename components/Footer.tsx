@@ -123,18 +123,6 @@ export function Footer() {
                 </div>
               </a>
             </div>
-            <a target="_blank" rel="noopener noreferrer" className="w-[220px] h-[20px] relative" href="https://www.reclameaqui.com.br/empresa/agex-transportes-urgentes/">
-              <Image
-                src="/images/reclameaqui.webp"
-                alt="Reclame Aqui"
-                width={220}
-                height={20}
-                quality={75}
-                loading="lazy"
-                className="object-contain"
-                sizes="220px"
-              />
-            </a>
           </div>
         </div>
       </div>
