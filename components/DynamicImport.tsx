@@ -19,7 +19,7 @@ export function DynamicImport({ import: importFn, loading, children }: DynamicIm
       error: null,
       isLoading: true,
       pastDelay: false,
-      timeout: false,
+      timedOut: false,
     }) : null}>
       {children(DynamicComponent)}
     </Suspense>
