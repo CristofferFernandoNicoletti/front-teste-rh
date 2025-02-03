@@ -1,9 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import Link from 'next/link';
 
-export function PreCadastroForm() {
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_FILE_TYPES = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+
+export const PreCadastroForm = memo(function PreCadastroForm() {
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -17,104 +20,75 @@ export function PreCadastroForm() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [aceitaPolitica, setAceitaPolitica] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  }, []);
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (!aceitaPolitica) {
       alert('Você precisa aceitar as políticas de privacidade para continuar.');
       return;
     }
-    // Aqui você pode adicionar a lógica para enviar os dados do formulário
     console.log({ ...formData, curriculo: selectedFile, aceitaPolitica });
-  };
+  }, [formData, selectedFile, aceitaPolitica]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const validateFile = useCallback((file: File): boolean => {
+    if (file.size > MAX_FILE_SIZE) {
+      alert('O arquivo é muito grande. Por favor, selecione um arquivo menor que 5MB.');
+      return false;
+    }
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+      alert('Por favor, selecione um arquivo PDF ou Word (.doc, .docx)');
+      return false;
+    }
+    return true;
+  }, []);
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      // Verificar o tipo do arquivo
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (!allowedTypes.includes(file.type)) {
-        alert('Por favor, selecione um arquivo PDF, DOC ou DOCX');
-        return;
-      }
-
+    if (file && validateFile(file)) {
       setSelectedFile(file);
     }
-  };
+  }, [validateFile]);
 
-  const removeFile = () => {
+  const removeFile = useCallback(() => {
     setSelectedFile(null);
-    // Limpar o input file
     const fileInput = document.getElementById('curriculo') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
     }
-  };
+  }, []);
 
   return (
     <div className="bg-white p-6 rounded-lg">
       <h2 className="text-xl font-medium mb-6">Pré cadastro</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Nome completo"
-          value={formData.nome}
-          onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
-          required
-        />
-
-        <input
-          type="email"
-          placeholder="E-mail"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
-          required
-        />
-
-        <input
-          type="tel"
-          placeholder="Telefone"
-          value={formData.telefone}
-          onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
-          required
-        />
-
-        <input
-          type="text"
-          placeholder="CPF"
-          value={formData.cpf}
-          onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
-          required
-        />
-
-        <input
-          type="text"
-          placeholder="Pretensão salarial"
-          value={formData.pretensaoSalarial}
-          onChange={(e) => setFormData({ ...formData, pretensaoSalarial: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
-          required
-        />
-
-        <input
-          type="text"
-          placeholder="Cidade"
-          value={formData.cidade}
-          onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
-          required
-        />
-
-        <textarea
-          placeholder="Mensagem"
-          value={formData.mensagem}
-          onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
-          rows={4}
-          className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
-        />
+        {Object.entries(formData).map(([key, value]) => (
+          key !== 'mensagem' ? (
+            <input
+              key={key}
+              type={key === 'email' ? 'email' : key === 'telefone' ? 'tel' : 'text'}
+              name={key}
+              placeholder={key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
+              value={value}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
+              required
+            />
+          ) : (
+            <textarea
+              key={key}
+              name={key}
+              placeholder="Mensagem"
+              value={value}
+              onChange={handleInputChange}
+              rows={4}
+              className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
+            />
+          )
+        ))}
 
         <div className="space-y-2">
           {!selectedFile ? (
@@ -164,57 +138,45 @@ export function PreCadastroForm() {
           />
         </div>
 
-        <div 
-          className="flex items-center space-x-2" 
-          id="privacy-policy-form-item" 
-          aria-describedby="privacy-policy-form-item-description" 
-          aria-invalid="false"
-        >
-          <button
-            type="button"
-            role="checkbox"
-            aria-checked={aceitaPolitica}
-            aria-label="Aceitar política de privacidade"
-            onClick={() => setAceitaPolitica(!aceitaPolitica)}
-            className="peer relative h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-white data-[state=checked]:bg-[#E64100] data-[state=checked]:border-[#E64100] flex items-center justify-center"
-            id="checkbox-privacy-policy"
-          >
-            {aceitaPolitica && (
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.5 2.5L3.5 7.5L1 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            )}
-          </button>
-          <input
-            aria-hidden="true"
-            tabIndex={-1}
-            type="checkbox"
-            value="on"
-            checked={aceitaPolitica}
-            onChange={(e) => setAceitaPolitica(e.target.checked)}
-            style={{ transform: 'translateX(-100%)', position: 'absolute', pointerEvents: 'none', opacity: 0, margin: 0, width: '16px', height: '16px' }}
-          />
-          <label htmlFor="checkbox-privacy-policy" className="text-sm font-inter text-[#231E16] font-normal cursor-pointer">
-            Eu aceito a{' '}
-            <Link 
-              href="/politica-de-privacidade" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="underline text-blue-600"
-            >
-              política de privacidade
-            </Link>
-          </label>
+        <div className="flex items-start space-x-2">
+          <div className="relative flex items-start">
+            <div className="flex h-6 items-center">
+              <input
+                id="privacy-policy"
+                name="privacy-policy"
+                type="checkbox"
+                checked={aceitaPolitica}
+                onChange={(e) => setAceitaPolitica(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-[#E64100] focus:ring-[#E64100]"
+                required
+              />
+            </div>
+            <div className="ml-3 text-sm leading-6">
+              <label htmlFor="privacy-policy" className="font-medium text-gray-900">
+                Eu aceito a{' '}
+                <Link 
+                  href="/politica-de-privacidade"
+                  className="text-[#E64100] underline hover:text-[#CC3A00]"
+                >
+                  política de privacidade
+                </Link>
+              </label>
+            </div>
+          </div>
         </div>
 
         <button
           type="submit"
           disabled={!aceitaPolitica}
-          className="bg-[#E64100] text-white hover:bg-[#CC3A00] w-full py-3 px-4 rounded-[14px] font-semibold text-base flex justify-center items-center gap-2 transition-colors duration-200"
+          className={`w-full py-3 px-4 rounded-[14px] font-semibold text-base flex justify-center items-center gap-2 transition-colors duration-200 ${
+            aceitaPolitica 
+              ? 'bg-[#E64100] text-white hover:bg-[#CC3A00]' 
+              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          }`}
         >
           Enviar o currículo
         </button>
       </form>
     </div>
   );
-}
+});

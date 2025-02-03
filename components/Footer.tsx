@@ -125,7 +125,7 @@ export function Footer() {
             </div>
             <a target="_blank" rel="noopener noreferrer" className="w-[220px] h-[20px] relative" href="https://www.reclameaqui.com.br/empresa/agex-transportes-urgentes/">
               <Image
-                src="/reclameaqui (1).webp"
+                src="/images/reclameaqui.webp"
                 alt="Reclame Aqui"
                 width={220}
                 height={20}

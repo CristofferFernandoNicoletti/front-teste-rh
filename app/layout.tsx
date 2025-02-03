@@ -1,12 +1,17 @@
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { HydrationFix } from '@/components/HydrationFix';
-import { inter } from '@/lib/fonts';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 import './globals.css';
 
-export const metadata = {
-  title: 'Front RH',
-  description: 'Front RH - Sistema de Recrutamento e Seleção',
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+export const metadata: Metadata = {
+  title: 'AGEX Transporte - Trabalhe Conosco',
+  description: 'Faça parte da equipe que move o futuro do transporte!',
 };
 
 export default function RootLayout({
@@ -15,12 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={inter.variable}>
-      <body suppressHydrationWarning={true} className="font-sans">
-        <HydrationFix />
-        <Header />
-        <main>{children}</main>
-        <Footer />
+    <html lang="pt-BR" className={inter.className}>
+      <body>
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
