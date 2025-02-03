@@ -1,31 +1,41 @@
 'use client';
 
-import Image, { ImageProps } from 'next/image';
+import Image from 'next/image';
 import { useState } from 'react';
 
-interface OptimizedImageProps extends Omit<ImageProps, 'quality' | 'loading' | 'sizes'> {
+interface OptimizedImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+  width?: number;
+  height?: number;
   priority?: boolean;
 }
 
-export function OptimizedImage({ src, alt, priority = false, className, ...props }: OptimizedImageProps) {
-  const [isLoading, setIsLoading] = useState(true);
+export function OptimizedImage({
+  src,
+  alt,
+  className = '',
+  width = 1920,
+  height = 1080,
+  priority = false
+}: OptimizedImageProps) {
+  const [loading, setLoading] = useState(true);
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
       <Image
         src={src}
         alt={alt}
+        width={width}
+        height={height}
         className={`
-          duration-700 ease-in-out
-          ${isLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'}
+          w-full h-full
+          transition-opacity duration-500
+          ${loading ? 'opacity-0' : 'opacity-100'}
         `}
-        loading={priority ? 'eager' : 'lazy'}
-        quality={75}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLzYyLy8yMi"
-        onLoadingComplete={() => setIsLoading(false)}
-        {...props}
+        onLoadingComplete={() => setLoading(false)}
+        priority={priority}
       />
     </div>
   );
