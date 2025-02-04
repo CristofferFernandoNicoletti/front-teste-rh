@@ -2,7 +2,7 @@
 const nextConfig = {
   output: 'standalone',
   images: {
-    domains: ['images.unsplash.com'],
+    domains: ['images.unsplash.com', 'windsurf.com.br', 'exemplo.com'],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
@@ -13,7 +13,20 @@ const nextConfig = {
   },
   experimental: {
     disableOptimizedLoading: true
-  }
+  },
+  headers: async () => {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'index,follow',
+          },
+        ],
+      },
+    ]
+  },
 };
 
 module.exports = nextConfig;
