@@ -19,10 +19,10 @@ export function Header() {
   // Otimizar o listener de scroll com throttle
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    
+
     const handleScroll = () => {
       if (timeoutId) return;
-      
+
       timeoutId = setTimeout(() => {
         const scrollPosition = window.scrollY;
         setIsScrolled(scrollPosition > 0);
@@ -53,7 +53,7 @@ export function Header() {
           <div className="min-h-[72px] flex items-center justify-between">
             <div className="flex items-center gap-6">
               <div className="w-[121px] h-[28px] relative">
-                <Link href="/">
+                <Link href="https://agex.com.br/">
                   <Image
                     src="/logo.svg"
                     alt="Agex"
@@ -64,11 +64,11 @@ export function Header() {
                   />
                 </Link>
               </div>
-              
+
               <nav className="hidden lg:flex items-center">
                 <div className="py-[15px] px-[16px] mr-1 hover:bg-black/10 h-10 flex items-center rounded-[14px]">
                   <div className="relative">
-                    <button 
+                    <button
                       className="relative text-left ring-0 border-none bg-transparent"
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
@@ -81,7 +81,7 @@ export function Header() {
                     </button>
                     <div className={`max-h-0 opacity-0 absolute top-[60px] left-50 w-52 p-2 bg-white shadow-lg z-6 rounded-xl overflow-hidden transition-all duration-500 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : ''}`}>
                       <div className="flex flex-col justify-center">
-                        <Link href="https://site-agex.vercel.app/quem-somos">
+                        <Link href="https://agex.com.br/quem-somos">
                           <div className="py-1.5 hover:bg-black/10 h-10 items-center rounded-[8px] flex px-4 text-blue-350 text-base leading-6 font-medium transition-colors duration-150">
                             Quem somos
                           </div>
@@ -91,12 +91,12 @@ export function Header() {
                             Trabalhe conosco
                           </div>
                         </a>
-                        <Link href="/solucoes">
+                        <Link href="https://agex.com.br/solucoes">
                           <div className="py-1.5 hover:bg-black/10 h-10 items-center rounded-[8px] px-4 text-blue-350 text-base leading-6 font-medium transition-colors duration-150 flex gap-1">
                             Soluções
                           </div>
                         </Link>
-                        <Link href="/atendimento">
+                        <Link href="https://agex.com.br/atendimento">
                           <div className="py-1.5 hover:bg-black/10 h-10 items-center rounded-[8px] px-4 text-blue-350 text-base leading-6 font-medium transition-colors duration-150 flex gap-1">
                             Ouvidoria
                           </div>
@@ -106,13 +106,13 @@ export function Header() {
                   </div>
                 </div>
 
-                <Link href="/seja-cliente" className={`text-black hover:bg-black/10 mx-1 h-10 items-center rounded-[14px] font-inter font-semibold flex py-[15px] px-[16px] min-h-10 justify-center relative bg-black/10 ${shouldBeTransparent ? 'text-white' : ''}`}>
+                <Link href="https://agex.com.br/seja-cliente" className={`text-black font-inter hover:bg-black/10 mx-1 h-10 flex items-center rounded-[14px] font-semibold py-[15px] px-[16px] min-h-10 justify-center ${shouldBeTransparent ? 'text-white' : ''}`}>
                   Seja cliente
                 </Link>
-                <Link href="/atendimento" className={`text-black font-inter hover:bg-black/10 mx-1 h-10 flex items-center rounded-[14px] font-semibold py-[15px] px-[16px] min-h-10 justify-center ${shouldBeTransparent ? 'text-white' : ''}`}>
+                <Link href="https://agex.com.br/atendimento" className={`text-black font-inter hover:bg-black/10 mx-1 h-10 flex items-center rounded-[14px] font-semibold py-[15px] px-[16px] min-h-10 justify-center ${shouldBeTransparent ? 'text-white' : ''}`}>
                   Atendimento
                 </Link>
-                <Link href="/blog" className={`text-black font-inter hover:bg-black/10 mx-1 h-10 flex items-center rounded-[14px] font-semibold py-[15px] px-[16px] min-h-10 justify-center ${shouldBeTransparent ? 'text-white' : ''}`}>
+                <Link href="https://agex.com.br/blog" className={`text-black font-inter hover:bg-black/10 mx-1 h-10 flex items-center rounded-[14px] font-semibold py-[15px] px-[16px] min-h-10 justify-center ${shouldBeTransparent ? 'text-white' : ''}`}>
                   Blog
                 </Link>
               </nav>
@@ -137,9 +137,9 @@ export function Header() {
               </a>
             </div>
 
-            <button 
+            <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden text-primary bg-transparent rounded-full p-2" 
+              className="lg:hidden text-primary bg-transparent rounded-full p-2"
               aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
             >
               {isMobileMenuOpen ? (

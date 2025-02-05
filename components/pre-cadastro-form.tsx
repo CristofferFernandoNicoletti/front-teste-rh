@@ -99,7 +99,7 @@ export const PreCadastroForm = memo(function PreCadastroForm() {
             >
               Adicionar currículo
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           ) : (
@@ -107,7 +107,7 @@ export const PreCadastroForm = memo(function PreCadastroForm() {
               <div className="flex items-center gap-2 overflow-hidden">
                 <div className="flex-shrink-0">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#FF4B12]">
-                    <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9M13 2L20 9M13 2V9H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9M13 2L20 9M13 2V9H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
                 <div className="min-w-0">
@@ -124,7 +124,7 @@ export const PreCadastroForm = memo(function PreCadastroForm() {
                 title="Remover arquivo"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-gray-500">
-                  <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             </div>
@@ -154,8 +154,8 @@ export const PreCadastroForm = memo(function PreCadastroForm() {
             <div className="ml-3 text-sm leading-6">
               <label htmlFor="privacy-policy" className="font-medium text-gray-900">
                 Eu aceito a{' '}
-                <Link 
-                  href="/politica-de-privacidade"
+                <Link
+                  href="https://agex.com.br/politica-de-privacidade"
                   className="text-[#E64100] underline hover:text-[#CC3A00]"
                 >
                   política de privacidade
@@ -168,11 +168,10 @@ export const PreCadastroForm = memo(function PreCadastroForm() {
         <button
           type="submit"
           disabled={!aceitaPolitica}
-          className={`w-full py-3 px-4 rounded-[14px] font-semibold text-base flex justify-center items-center gap-2 transition-colors duration-200 ${
-            aceitaPolitica 
-              ? 'bg-[#E64100] text-white hover:bg-[#CC3A00]' 
+          className={`w-full py-3 px-4 rounded-[14px] font-semibold text-base flex justify-center items-center gap-2 transition-colors duration-200 ${aceitaPolitica
+              ? 'bg-[#E64100] text-white hover:bg-[#CC3A00]'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-          }`}
+            }`}
         >
           Enviar o currículo
         </button>

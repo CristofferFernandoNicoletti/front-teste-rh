@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useMemo } from 'react';
 import { ChevronDown, Upload } from 'lucide-react';
+import Image from 'next/image';
 
 export default function TrabalhePage() {
   const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
@@ -21,174 +22,169 @@ export default function TrabalhePage() {
     };
   }, []);
 
-  const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const validation = validateFile(file);
-    if (!validation.isValid) {
-      alert(validation.error);
-      event.target.value = '';
-      return;
-    }
+  // Processamento de arquivo otimizado
+  const processFile = useCallback(async (file: File) => {
+    if (isProcessing) return;
 
     setIsProcessing(true);
-    // Simulando o upload do arquivo
-    setTimeout(() => {
+    try {
+      const validation = validateFile(file);
+      if (validation.isValid) {
+        // setSelectedFile(file);
+      } else if (validation.error) {
+        alert(validation.error);
+      }
+    } catch (error) {
+      console.error('Erro ao processar arquivo:', error);
+    } finally {
       setIsProcessing(false);
-      alert('Arquivo enviado com sucesso!');
-      event.target.value = '';
-    }, 2000);
-  }, [validateFile]);
+    }
+  }, [isProcessing, validateFile]);
 
-  const handleButtonClick = useCallback(() => {
-    fileInputRef.current?.click();
+  const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      processFile(file);
+    }
+  }, [processFile]);
+
+  const handleDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
   }, []);
 
+  const handleDrop = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file) {
+      processFile(file);
+    }
+  }, [processFile]);
+
   return (
-    <main className="pt-32 pb-16 px-4">
-      <div className="max-w-[1400px] mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Trabalhe Conosco</h1>
-        
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Junte-se à Nossa Equipe</h2>
-            <p className="text-gray-600 mb-6">
-              Na Agex, acreditamos que nossos colaboradores são a chave do nosso sucesso. 
-              Estamos sempre em busca de talentos que compartilhem nossa paixão por excelência 
-              e inovação no setor de logística.
-            </p>
-            
-            <h3 className="text-xl font-semibold mb-3">Por que trabalhar na Agex?</h3>
-            <ul className="list-disc pl-6 text-gray-600 mb-6">
-              <li>Ambiente dinâmico e colaborativo</li>
-              <li>Oportunidades de crescimento profissional</li>
-              <li>Benefícios competitivos</li>
-              <li>Programas de desenvolvimento</li>
-              <li>Cultura de inovação</li>
-            </ul>
-
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">Como se candidatar</h3>
-              <p className="text-gray-600 mb-4">
-                Envie seu currículo através do formulário ao lado. Nossa equipe de RH 
-                analisará seu perfil e entrará em contato caso haja uma vaga compatível 
-                com suas qualificações.
-              </p>
-              <div className="flex items-center text-sm text-gray-500">
-                <ChevronDown className="w-4 h-4 mr-1" />
-                <span>Formatos aceitos: PDF e Word (máx. 5MB)</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold mb-6">Envie seu Currículo</h2>
-            
-            <div className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nome completo
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-                  placeholder="Digite seu nome"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  E-mail
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-                  placeholder="Digite seu e-mail"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                  Telefone
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-                  placeholder="(00) 00000-0000"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="area" className="block text-sm font-medium text-gray-700 mb-1">
-                  Área de interesse
-                </label>
-                <select
-                  id="area"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-                >
-                  <option value="">Selecione uma área</option>
-                  <option value="operacional">Operacional</option>
-                  <option value="administrativo">Administrativo</option>
-                  <option value="comercial">Comercial</option>
-                  <option value="ti">Tecnologia da Informação</option>
-                  <option value="rh">Recursos Humanos</option>
-                </select>
-              </div>
-
-              <div>
-                <span className="block text-sm font-medium text-gray-700 mb-2">
-                  Currículo
-                </span>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  className="hidden"
-                  accept=".pdf,.doc,.docx"
-                  onChange={handleFileChange}
-                />
-                <button
-                  onClick={handleButtonClick}
-                  disabled={isProcessing}
-                  className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                >
-                  <Upload className="w-5 h-5 mr-2" />
-                  {isProcessing ? 'Processando...' : 'Anexar arquivo'}
-                </button>
-                <p className="mt-1 text-sm text-gray-500">
-                  PDF ou Word, máximo 5MB
-                </p>
-              </div>
-
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  id="privacy"
-                  checked={isPrivacyAccepted}
-                  onChange={(e) => setIsPrivacyAccepted(e.target.checked)}
-                  className="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                />
-                <label htmlFor="privacy" className="ml-2 text-sm text-gray-600">
-                  Li e aceito a{' '}
-                  <a href="/politica-de-privacidade" className="text-primary hover:underline">
-                    Política de Privacidade
-                  </a>
-                </label>
-              </div>
-
-              <button
-                disabled={!isPrivacyAccepted || isProcessing}
-                className="w-full bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Enviar currículo
-              </button>
+    <div className="flex min-h-screen flex-col lg:flex-row">
+      <div className="w-full lg:w-1/2 relative min-h-[300px] lg:min-h-screen">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/fundo.jpeg"
+            alt="Fundo AGEX"
+            priority={false}
+            quality={75}
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-20 lg:pt-[138px]">
+            <div className="max-w-[500px]">
+              <span className="inline-block bg-[#FF4B12] text-white px-4 py-2 rounded-[4px] text-sm font-bold">
+                TRABALHE CONOSCO
+              </span>
+              <h1 className="text-white text-[32px] lg:text-[40px] font-bold leading-[1.2] lg:leading-[48px] mt-6">
+                Cadastre seu currículo e faça parte da equipe que move o futuro do transporte!
+              </h1>
             </div>
           </div>
         </div>
       </div>
-    </main>
+      <div className="w-full lg:w-1/2 bg-[#F9F8F7]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-[138px]">
+          <div className="max-w-[400px] mx-auto">
+            <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+              <div className="flex flex-col gap-4">
+                <h2 className="text-[#231E16] text-sm leading-4 font-bold">Informações pessoais</h2>
+                <input
+                  className="placeholder:text-gray-500 text-black flex h-[56px] w-full rounded-[6px] border px-3 py-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 border-neutral-300 bg-white"
+                  placeholder="Nome completo"
+                  type="text"
+                  name="nome"
+                />
+                <input
+                  className="placeholder:text-gray-500 text-black flex h-[56px] w-full rounded-[6px] border px-3 py-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 border-neutral-300 bg-white"
+                  placeholder="E-mail"
+                  type="email"
+                  name="email"
+                />
+                <input
+                  className="placeholder:text-gray-500 text-black flex h-[56px] w-full rounded-[6px] border px-3 py-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 border-neutral-300 bg-white"
+                  placeholder="Celular"
+                  type="tel"
+                  name="celular"
+                />
+                <input
+                  className="placeholder:text-gray-500 text-black flex h-[56px] w-full rounded-[6px] border px-3 py-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 border-neutral-300 bg-white"
+                  placeholder="CPF"
+                  type="text"
+                  name="cpf"
+                />
+                <input
+                  className="placeholder:text-gray-500 text-black flex h-[56px] w-full rounded-[6px] border px-3 py-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 border-neutral-300 bg-white"
+                  placeholder="Pretensão salarial"
+                  type="text"
+                  name="pretensao_salarial"
+                />
+                <button
+                  type="button"
+                  className="flex text-start w-full items-center justify-between rounded-[6px] border text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 h-[56px] px-3 py-3 bg-white border-neutral-300"
+                >
+                  <span className="text-gray-500">Cidade onde reside</span>
+                  <ChevronDown className="h-4 w-4 opacity-50" />
+                </button>
+                <button
+                  type="button"
+                  className="flex text-start w-full items-center justify-between rounded-[6px] border text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 h-[56px] px-3 py-3 bg-white border-neutral-300"
+                >
+                  <span className="text-gray-500">Área</span>
+                  <ChevronDown className="h-4 w-4 opacity-50" />
+                </button>
+              </div>
+              <div className="flex flex-col gap-4">
+                <h2 className="text-[#231E16] text-sm leading-4 font-bold">Anexar o currículo</h2>
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  className="relative border-2 border-dashed border-neutral-300 rounded-[6px] p-4 sm:p-6 text-center cursor-pointer hover:border-orange-400 transition-colors"
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                  />
+                  <Upload className="w-6 h-6 mx-auto mb-2 text-gray-400" />
+                  <div>
+                    <p className="text-sm text-gray-500">Clique para selecionar ou arraste</p>
+                    <p className="text-xs text-gray-400 mt-1">PDF ou Word até 5MB</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                  <input
+                    type="checkbox"
+                    id="checkbox-privacy-policy"
+                    className="w-4 h-4 rounded bg-white border border-gray-300 accent-[#FF4B12] cursor-pointer flex-shrink-0"
+                    aria-label="Aceitar política de privacidade"
+                    checked={isPrivacyAccepted}
+                    onChange={(e) => setIsPrivacyAccepted(e.target.checked)}
+                  />
+                  <label htmlFor="checkbox-privacy-policy" className="text-sm text-gray-700 cursor-pointer">
+                    Eu aceito a <a href="https://agex.com.br/politica-de-privacidade" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">política de privacidade</a>
+                  </label>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-[#FF4B12] text-white py-3 px-4 rounded-[32px] font-medium text-base transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-2 sm:mt-4"
+                  disabled={!isPrivacyAccepted}
+                >
+                  Cadastrar-se
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
