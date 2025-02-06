@@ -11,8 +11,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'AGEX Transporte - Trabalhe Conosco',
-  description: 'Faça parte da equipe que move o futuro do transporte!',
+  title: {
+    template: 'Agex • %s',
+    default: 'Agex • Trabalhe conosco',
+  },
+  description: 'Agex Transportes - Soluções em logística e transporte',
+  icons: [
+    { rel: 'icon', url: '/icon.png' },
+    { rel: 'apple-touch-icon', url: '/icon.png' },
+    { rel: 'shortcut icon', url: '/icon.png' },
+  ],
   robots: {
     index: true,
     follow: true,
@@ -26,6 +34,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={inter.className}>
+      <head>
+        <link rel="icon" href="/icon.png" />
+      </head>
       <body>
         <div className="flex min-h-screen flex-col">
           <Header />

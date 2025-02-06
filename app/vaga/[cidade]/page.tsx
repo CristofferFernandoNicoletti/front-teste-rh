@@ -14,6 +14,17 @@ interface PageProps {
   params: Promise<{ cidade: string }>;
 }
 
+export async function generateMetadata({ params }: PageProps) {
+  const resolvedParams = await params;
+  const cidadeFormatada = resolvedParams.cidade
+    .toLowerCase()
+    .replace(/(^|\s)\S/g, (L: string) => L.toUpperCase());
+
+  return {
+    title: `Vagas em ${cidadeFormatada}`,
+  }
+}
+
 export default async function VagaDetalhePage({ params }: PageProps) {
   // Formata o nome da cidade para exibição (primeira letra maiúscula)
   const resolvedParams = await params;
